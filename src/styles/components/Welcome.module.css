@@ -1,0 +1,18 @@
+.welcomeContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--blue-dark);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.welcomeContainer h2 {
+    margin-bottom: 2rem;
+    color: var(--red);
+}

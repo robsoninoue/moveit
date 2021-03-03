@@ -1,0 +1,41 @@
+.emailForm {
+    width: 40%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0rem;
+}
+
+.emailForm label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.emailForm > div {
+    display: flex;
+    flex-flow: nowrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.emailForm input, .emailForm button {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--background);
+}
+
+
+.emailForm input[type=email], .emailForm input[type=text] {
+    color: var(--title);
+    background: var(--background);
+    flex:1;
+    margin-right: 1rem;
+}
+
+.emailForm button {
+    color: var(--blue-dark);
+}

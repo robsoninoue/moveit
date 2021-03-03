@@ -1,15 +1,16 @@
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import { ChallengeBox } from "../components/ChallengeBox";
 import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
-
-import Head from 'next/head'
-import { GetServerSideProps } from 'next'
-
-import styles from '../styles/pages/Home.module.css'
-import { ChallengeBox } from "../components/ChallengeBox";
-import { CountdownProvider } from "../contexts/CountdownContext";
 import { ChallengesProvider } from "../contexts/ChallengeContext";
+import { CountdownProvider } from "../contexts/CountdownContext";
+import { UserProvider } from "../contexts/UserContext";
+import styles from '../styles/pages/Home.module.css';
+
+
 
 interface HomeProps {
   level: number,
@@ -18,33 +19,35 @@ interface HomeProps {
 }
 
 export default function Home(props) {
-  console.log(props)
+  // console.log(props)
   return (
-    <ChallengesProvider
-      level={props.level}
-      currentExperience={props.currentExperience}
-      challengesCompleted={props.challengesCompleted}
-    >
-      <div className={styles.container}>
+    <UserProvider>
+      <ChallengesProvider
+        level={props.level}
+        currentExperience={props.currentExperience}
+        challengesCompleted={props.challengesCompleted}
+      >
+        <div className={styles.container}>
 
-        <Head>
-          <title>Inicio | App nextJS</title>
-        </Head>
-        <ExperienceBar />
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </div>
-    </ChallengesProvider>
+          <Head>
+            <title>Inicio | App nextJS</title>
+          </Head>
+          <ExperienceBar />
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile />
+                <CompletedChallenges />
+                <Countdown />
+              </div>
+              <div>
+                <ChallengeBox />
+              </div>
+            </section>
+          </CountdownProvider>
+        </div>
+      </ChallengesProvider>
+    </UserProvider>
   )
 }
 
