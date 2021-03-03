@@ -6,7 +6,9 @@ interface UserContextData{
     userName: string,
     userEmail: string,
     storeEmail: (emailInserted:string) => void,
-    storeName: (emailInserted:string) => void
+    storeName: (emailInserted:string) => void,
+    isEmailFilled: boolean,
+    isNameFilled: boolean
 }
 
 interface UserProviderProps {
@@ -18,6 +20,8 @@ export const UserContext = createContext({} as UserContextData)
 export function UserProvider({children}: UserProviderProps) {
     
     const [isWelcome,setIsWelcome] = useState(true)
+    const [isEmailFilled, setIsEmailFilled] = useState(true)
+    const [isNameFilled, setIsNameFilled] = useState(false)
 
     const [userEmail, setUserEmail] = useState(null)
     const [userName,setUserName] = useState(null)
@@ -25,7 +29,12 @@ export function UserProvider({children}: UserProviderProps) {
     function storeEmail(emailInserted) {
         console.log(`Dentro do contexto! ${emailInserted}`)
         setUserEmail(emailInserted)
-        setIsWelcome(false)
+        setIsEmailFilled(false)
+        
+        if (emailInserted == 'robson@robson.in') {
+            setIsNameFilled(true)
+        }
+        // setIsWelcome(false)
     }
 
     function storeName(nameInserted) {
@@ -39,7 +48,9 @@ export function UserProvider({children}: UserProviderProps) {
             userEmail,
             userName,
             storeEmail,
-            storeName
+            storeName,
+            isEmailFilled,
+            isNameFilled
         }}>
             {children}
             {isWelcome && <Welcome/>}
