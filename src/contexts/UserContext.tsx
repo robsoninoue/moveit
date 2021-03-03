@@ -18,7 +18,7 @@ interface UserProviderProps {
 export const UserContext = createContext({} as UserContextData)
 
 export function UserProvider({children}: UserProviderProps) {
-    
+
     const [isWelcome,setIsWelcome] = useState(true)
     const [isEmailFilled, setIsEmailFilled] = useState(true)
     const [isNameFilled, setIsNameFilled] = useState(false)
