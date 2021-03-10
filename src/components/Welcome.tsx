@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import styles from '../styles/components/Welcome.module.css';
 import { EmailForm } from './EmailForm';
-import { NameForm } from './nameForm';
+import { NameForm } from './NameForm';
 
 
 

@@ -1,4 +1,5 @@
-import { Children, createContext, ReactNode, useState } from "react"
+import { PrismaClient } from "@prisma/client"
+import { createContext, ReactNode, useState } from "react"
 import { Welcome } from "../components/Welcome"
 
 
@@ -6,7 +7,7 @@ interface UserContextData{
     userName: string,
     userEmail: string,
     storeEmail: (emailInserted:string) => void,
-    storeName: (emailInserted:string) => void,
+    storeName: (nameInserted:string) => void,
     isEmailFilled: boolean,
     isNameFilled: boolean
 }
@@ -26,21 +27,35 @@ export function UserProvider({children}: UserProviderProps) {
     const [userEmail, setUserEmail] = useState(null)
     const [userName,setUserName] = useState(null)
 
-    function storeEmail(emailInserted) {
-        console.log(`Dentro do contexto! ${emailInserted}`)
+    async function storeEmail(emailInserted:string) {
+
         setUserEmail(emailInserted)
         setIsEmailFilled(false)
-        
-        if (emailInserted == 'robson@robson.in') {
+    
+        const sendMailRequest = await fetch('http://localhost:2000/api/email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({'email': emailInserted})
+        })
+    
+        const userData = await sendMailRequest.json()
+
+        if (userData.user == null) {
             setIsNameFilled(true)
+        } else {
+            setUserName(userData.user.name)
+            setIsWelcome(false)
         }
-        // setIsWelcome(false)
     }
 
-    function storeName(nameInserted) {
+    async function storeName(nameInserted:string) {
         setUserName(nameInserted)
+        await fetch('http://localhost:2000/api/updateUser', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({'email': userEmail, 'name': nameInserted})
+        })
         setIsWelcome(false)
-        
     }
 
     return (
