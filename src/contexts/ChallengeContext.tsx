@@ -1,7 +1,8 @@
-import {createContext, ReactNode, useEffect, useState} from 'react'
+import {createContext, ReactNode, useContext, useEffect, useState} from 'react'
 import Cookies from 'js-cookie'
 import challenges from '../../challenges.json'
 import { LevelUpModal } from '../components/LevelUpModal'
+import { UserContext } from './UserContext'
 
 interface Challenge {
     type: 'body' | 'eye'
@@ -24,18 +25,36 @@ interface ChallengesContextData {
 
 interface ChallengesProviderProps {
     children: ReactNode
-    level: number,
-    currentExperience: number,
-    challengesCompleted: number
+    // level: number,
+    // currentExperience: number,
+    // challengesCompleted: number
+}
+
+async function updateScore(userEmail:string, level:number, currentExperience:number, challengesCompleted:number) {
+    if(userEmail != null) {
+        await fetch('http://localhost:2000/api/updateScore',{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'email': userEmail,
+                'level': level,
+                'experienceAmount': currentExperience,
+                'challengesCompleted': challengesCompleted
+            })
+        })
+    } else {
+    }
 }
 
 export const ChallengeContext = createContext({} as ChallengesContextData)
 
 export function ChallengesProvider({children,...rest}:ChallengesProviderProps) {
 
-    const [level, setLevel] = useState(rest.level ?? 1)
-    const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
-    const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0)
+    const { userEmail, receivedLevel, receivedCurrentExperience, receivedChallengesCompleted } = useContext(UserContext)
+
+    const [level, setLevel] = useState(receivedLevel)
+    const [currentExperience, setCurrentExperience] = useState(receivedCurrentExperience)
+    const [challengesCompleted, setChallengesCompleted] = useState(receivedChallengesCompleted)
     const [activeChallenge, setActiveChallenge] = useState(null)
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
@@ -46,10 +65,20 @@ export function ChallengesProvider({children,...rest}:ChallengesProviderProps) {
     },[])
 
     useEffect(()=>{
-        Cookies.set('level', String(level))
-        Cookies.set('currentExperience', String(currentExperience))
-        Cookies.set('challengesCompleted', String(challengesCompleted))
-    },[level, currentExperience, challengesCompleted])
+        setLevel(receivedLevel)
+        setCurrentExperience(receivedCurrentExperience)
+        setChallengesCompleted(receivedChallengesCompleted)
+    },[receivedCurrentExperience, receivedLevel, receivedChallengesCompleted])
+
+    useEffect(()=>{
+        updateScore(userEmail, level, currentExperience, challengesCompleted)
+    },[completeChallenge])
+
+    // useEffect(()=>{
+    //     Cookies.set('level', String(level))
+    //     Cookies.set('currentExperience', String(currentExperience))
+    //     Cookies.set('challengesCompleted', String(challengesCompleted))
+    // },[level, currentExperience, challengesCompleted])
 
     function LevelUp(){
       setLevel(level + 1)
@@ -95,7 +124,14 @@ export function ChallengesProvider({children,...rest}:ChallengesProviderProps) {
         setCurrentExperience(finalExperience)
         setActiveChallenge(null)
         setChallengesCompleted(challengesCompleted + 1)
+        
     }
+    
+    // useEffect(() => {
+    //     alert(userEmail)
+    //     alert(`experiencia: ${currentExperience}`)
+    //     alert(`desafios completos: ${challengesCompleted}`)
+    // },[currentExperience])
 
     return (
         <ChallengeContext.Provider

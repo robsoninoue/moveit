@@ -16,6 +16,6 @@ model User {
   name                String?    
   email               String    @unique
   experienceAmount    Int?      @default(0)
-  level               Int?      @default(0)
+  level               Int?      @default(1)
   challengesCompleted Int?      @default(0)
 }

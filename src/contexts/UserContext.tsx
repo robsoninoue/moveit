@@ -9,7 +9,10 @@ interface UserContextData{
     storeEmail: (emailInserted:string) => void,
     storeName: (nameInserted:string) => void,
     isEmailFilled: boolean,
-    isNameFilled: boolean
+    isNameFilled: boolean,
+    receivedLevel: number,
+    receivedCurrentExperience: number,
+    receivedChallengesCompleted: number,
 }
 
 interface UserProviderProps {
@@ -27,12 +30,26 @@ export function UserProvider({children}: UserProviderProps) {
     const [userEmail, setUserEmail] = useState(null)
     const [userName,setUserName] = useState(null)
 
+    const [receivedLevel, setReceivedLevel] = useState(1)
+    const [receivedCurrentExperience, setReceivedCurrentExperience] = useState(0)
+    const [receivedChallengesCompleted, setReceivedChallengesCompleted] = useState(0)
+
+    // alert(receivedLevel)
+
+    // async function receivedUserInfo() { await fetch('http://localhost:2000/api/showUser', {
+    //     method: 'GET',
+    //     headers: { 'Content-Type': 'application/json'},
+    //     body: JSON.stringify({'email': userEmail})
+    // })}
+
+    // const receveidUserData = await receivedUserInfo.json()
+
     async function storeEmail(emailInserted:string) {
 
         setUserEmail(emailInserted)
         setIsEmailFilled(false)
     
-        const sendMailRequest = await fetch('http://localhost:2000/api/email', {
+        const sendMailRequest = await fetch('http://localhost:2000/api/showUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({'email': emailInserted})
@@ -45,6 +62,9 @@ export function UserProvider({children}: UserProviderProps) {
         } else {
             setUserName(userData.user.name)
             setIsWelcome(false)
+            setReceivedLevel(userData.user.level)
+            setReceivedCurrentExperience(userData.user.experienceAmount)
+            setReceivedChallengesCompleted(userData.user.challengesCompleted)
         }
     }
 
@@ -55,7 +75,7 @@ export function UserProvider({children}: UserProviderProps) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({'email': userEmail, 'name': nameInserted})
         })
-        setIsWelcome(false)
+        setIsWelcome(false)        
     }
 
     return (
@@ -65,7 +85,10 @@ export function UserProvider({children}: UserProviderProps) {
             storeEmail,
             storeName,
             isEmailFilled,
-            isNameFilled
+            isNameFilled,
+            receivedLevel,
+            receivedCurrentExperience,
+            receivedChallengesCompleted,
         }}>
             {children}
             {isWelcome && <Welcome/>}

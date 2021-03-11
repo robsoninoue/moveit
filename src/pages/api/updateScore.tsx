@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse} from 'next'
 
 const prisma = new PrismaClient()
 
-export default async function UpdateUser(request: NextApiRequest, response: NextApiResponse){
+export default async function UpdateScore(request: NextApiRequest, response: NextApiResponse){
 
     const data  = request.body
 
@@ -14,15 +14,17 @@ export default async function UpdateUser(request: NextApiRequest, response: Next
         }
     })
 
-    const updateName = await prisma.user.update({
+    const updateScore = await prisma.user.update({
         where: {
             id: Number(emailQuery.id)
         },
         data: {
-            name: String(data.name)
+            level: Number(data.level),
+            experienceAmount: Number(data.experienceAmount),
+            challengesCompleted: Number(data.challengesCompleted)
         }
     })
-    response.json(updateName)
+    response.json(updateScore)
 
     prisma.$disconnect
 }

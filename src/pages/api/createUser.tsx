@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function CheckEmail(request: NextApiRequest, response: NextApiResponse){
+export default async function CreateUser(request: NextApiRequest, response: NextApiResponse){
 
     const data = request.body
 
