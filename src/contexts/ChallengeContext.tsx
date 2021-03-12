@@ -32,7 +32,7 @@ interface ChallengesProviderProps {
 
 async function updateScore(userEmail:string, level:number, currentExperience:number, challengesCompleted:number) {
     if(userEmail != null) {
-        await fetch('http://localhost:2000/api/updateScore',{
+        await fetch('http://localhost:3000/api/updateScore',{
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

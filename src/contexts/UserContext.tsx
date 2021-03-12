@@ -36,7 +36,7 @@ export function UserProvider({children}: UserProviderProps) {
 
     // alert(receivedLevel)
 
-    // async function receivedUserInfo() { await fetch('http://localhost:2000/api/showUser', {
+    // async function receivedUserInfo() { await fetch('http://localhost:3000/api/showUser', {
     //     method: 'GET',
     //     headers: { 'Content-Type': 'application/json'},
     //     body: JSON.stringify({'email': userEmail})
@@ -49,7 +49,7 @@ export function UserProvider({children}: UserProviderProps) {
         setUserEmail(emailInserted)
         setIsEmailFilled(false)
     
-        const sendMailRequest = await fetch('http://localhost:2000/api/showUser', {
+        const sendMailRequest = await fetch('http://localhost:3000/api/showUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({'email': emailInserted})
@@ -70,7 +70,7 @@ export function UserProvider({children}: UserProviderProps) {
 
     async function storeName(nameInserted:string) {
         setUserName(nameInserted)
-        await fetch('http://localhost:2000/api/updateUser', {
+        await fetch('http://localhost:3000/api/updateUser', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({'email': userEmail, 'name': nameInserted})
