@@ -7,10 +7,4 @@ export default async function Test(request: NextApiRequest, response: NextApiRes
     const showUsers = await prisma.user.findMany()
 
     response.json({showUsers})
-
-    // response.json({'message': 'Hello'})
-
-    // const heyOh = 'heyOh!!'
-
-    // response.json(heyOh)
 }

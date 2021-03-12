@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typeorm": "ts-node node_modules/typeorm/cli.js"
+    "prima:generate": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

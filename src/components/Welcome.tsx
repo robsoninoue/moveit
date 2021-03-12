@@ -14,7 +14,6 @@ export function Welcome() {
         <div className={styles.welcomeContainer}>
             <h1>Bem vindo ao MoveIt!</h1>
             <h2>Acelere sua produtividade com a técnica Pomodoro!</h2>
-            {/* <NameForm/> */}
             {isEmailFilled ? <EmailForm/> : isNameFilled && <NameForm/>}
         </div>
     )

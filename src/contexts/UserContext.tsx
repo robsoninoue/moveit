@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client"
 import { createContext, ReactNode, useState } from "react"
 import { Welcome } from "../components/Welcome"
 
@@ -34,22 +33,12 @@ export function UserProvider({children}: UserProviderProps) {
     const [receivedCurrentExperience, setReceivedCurrentExperience] = useState(0)
     const [receivedChallengesCompleted, setReceivedChallengesCompleted] = useState(0)
 
-    // alert(receivedLevel)
-
-    // async function receivedUserInfo() { await fetch('http://localhost:3000/api/showUser', {
-    //     method: 'GET',
-    //     headers: { 'Content-Type': 'application/json'},
-    //     body: JSON.stringify({'email': userEmail})
-    // })}
-
-    // const receveidUserData = await receivedUserInfo.json()
-
     async function storeEmail(emailInserted:string) {
 
         setUserEmail(emailInserted)
         setIsEmailFilled(false)
     
-        const sendMailRequest = await fetch('http://localhost:3000/api/showUser', {
+        const sendMailRequest = await fetch('/api/showUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({'email': emailInserted})
@@ -70,7 +59,7 @@ export function UserProvider({children}: UserProviderProps) {
 
     async function storeName(nameInserted:string) {
         setUserName(nameInserted)
-        await fetch('http://localhost:3000/api/updateUser', {
+        await fetch('/api/updateUser', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({'email': userEmail, 'name': nameInserted})
