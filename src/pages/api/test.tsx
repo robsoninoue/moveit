@@ -5,4 +5,8 @@ export default async function Test(request: NextApiRequest, response: NextApiRes
 
     const showUsers = await prisma.user.findMany()
     response.json(showUsers)
+    // console.log(showUsers)
+    // setTimeout(() => {
+    //     response.json(showUsers)
+    // },15000)
 }

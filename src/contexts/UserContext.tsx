@@ -12,6 +12,7 @@ interface UserContextData{
     receivedLevel: number,
     receivedCurrentExperience: number,
     receivedChallengesCompleted: number,
+    isLoading: boolean,
 }
 
 interface UserProviderProps {
@@ -25,6 +26,7 @@ export function UserProvider({children}: UserProviderProps) {
     const [isWelcome,setIsWelcome] = useState(true)
     const [isEmailFilled, setIsEmailFilled] = useState(true)
     const [isNameFilled, setIsNameFilled] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const [userEmail, setUserEmail] = useState(null)
     const [userName,setUserName] = useState(null)
@@ -34,10 +36,10 @@ export function UserProvider({children}: UserProviderProps) {
     const [receivedChallengesCompleted, setReceivedChallengesCompleted] = useState(0)
 
     async function storeEmail(emailInserted:string) {
-
         setUserEmail(emailInserted)
         setIsEmailFilled(false)
-    
+        setIsLoading(true)
+
         const sendMailRequest = await fetch('/api/showUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -47,6 +49,7 @@ export function UserProvider({children}: UserProviderProps) {
         const userData = await sendMailRequest.json()
 
         if (userData.user == null) {
+            setIsLoading(false)
             setIsNameFilled(true)
         } else {
             setUserName(userData.user.name)
@@ -55,10 +58,13 @@ export function UserProvider({children}: UserProviderProps) {
             setReceivedCurrentExperience(userData.user.experienceAmount)
             setReceivedChallengesCompleted(userData.user.challengesCompleted)
         }
+        
     }
 
     async function storeName(nameInserted:string) {
         setUserName(nameInserted)
+        setIsLoading(true)
+        setIsNameFilled(false)
         await fetch('/api/updateUser', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -78,10 +84,11 @@ export function UserProvider({children}: UserProviderProps) {
             receivedLevel,
             receivedCurrentExperience,
             receivedChallengesCompleted,
+            isLoading,
         }}>
             {children}
             {isWelcome && <Welcome/>}
         </UserContext.Provider>
-    )
-    
+    )   
 }
+
