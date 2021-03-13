@@ -1,8 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from './clientPrisma'
 import { NextApiRequest, NextApiResponse} from 'next'
-
-
-const prisma = new PrismaClient()
 
 export default async function UpdateScore(request: NextApiRequest, response: NextApiResponse){
 
@@ -29,6 +26,4 @@ export default async function UpdateScore(request: NextApiRequest, response: Nex
     } else {
         response.status(500)
     }
-
-    prisma.$disconnect
 }

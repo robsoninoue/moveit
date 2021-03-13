@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from './clientPrisma'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function CreateUser(request: NextApiRequest, response: NextApiResponse){
 
     const data = request.body
-
-    const prisma = new PrismaClient
 
     const createUser = await prisma.user.create({
         data: {
@@ -13,7 +11,4 @@ export default async function CreateUser(request: NextApiRequest, response: Next
         }
     })
     response.json(createUser)
-
-    prisma.$disconnect
-
 }

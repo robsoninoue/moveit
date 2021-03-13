@@ -1,8 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from './clientPrisma'
 import { NextApiRequest, NextApiResponse} from 'next'
-
-
-const prisma = new PrismaClient()
 
 export default async function CheckEmail(request: NextApiRequest, response: NextApiResponse){
 
@@ -23,8 +20,5 @@ export default async function CheckEmail(request: NextApiRequest, response: Next
                 }
             })
         response.status(200).json({user: emailQuery})
-    }
-
-    prisma.$disconnect
-    
+    }    
 }

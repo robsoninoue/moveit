@@ -1,10 +1,10 @@
 {
     "env": {
-      "DATABASE_URL": "@database_pg_url"
+      "DATABASE_URL": "@database-url-pg"
     },
     "build": {
       "env": {
-        "DATABASE_URL": "@database_pg_url"
+        "DATABASE_URL": "@database-url-pg"
       }
     }
 }

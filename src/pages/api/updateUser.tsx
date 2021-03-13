@@ -1,8 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from './clientPrisma'
 import { NextApiRequest, NextApiResponse} from 'next'
-
-
-const prisma = new PrismaClient()
 
 export default async function UpdateUser(request: NextApiRequest, response: NextApiResponse){
 
@@ -23,6 +20,4 @@ export default async function UpdateUser(request: NextApiRequest, response: Next
         }
     })
     response.json(updateName)
-
-    prisma.$disconnect
 }
