@@ -39,3 +39,15 @@
 .emailForm button {
     color: var(--blue-dark);
 }
+
+@media screen and (max-width: 1000px) {
+    .emailForm {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .emailForm {
+        width: 100%;
+    }
+}

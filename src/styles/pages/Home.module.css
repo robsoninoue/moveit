@@ -14,3 +14,25 @@
     gap: 6.25rem;
     align-content: center;
 }
+
+@media screen and (orientation:portrait) {
+    .container {
+        height: 100%;
+    }
+    .container section {
+        display: flex;
+        flex-flow: column;
+        margin-top: 2rem;
+        grid-template-columns: none;
+        gap:2rem;
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .container {
+        height: 100%;
+    }
+    .container section {
+        margin-top:2rem;
+    }
+}

@@ -98,3 +98,9 @@
 .challengeActive footer button:hover {
     filter:brightness(0.9)
 }
+
+@media screen and (max-width:900px), (orientation:portrait) {
+    .challengeActive main {
+        margin: 1rem auto;
+    }
+}
